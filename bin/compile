@@ -23,12 +23,12 @@ if [ "$BUILD_DIR/app-config.heroku.yaml" ]; then
 else
     cat <<EOM
 
-        ## Warning: Overwriting config
+    ## Warning: Overwriting config
 
-        Setting app-config.heroku.yaml to use Heroku Postgres backend.
+    Setting app-config.heroku.yaml to use Heroku Postgres backend.
 
-    -----> Installing app-config.heroku.yaml
-    EOM
+-----> Installing app-config.heroku.yaml
+EOM
 
     cp "$BIN_DIR/support/app-config.heroku.yaml" > "$BUILD_DIR/app-config.heroku.yaml"
 
@@ -36,16 +36,16 @@ else
         echo "Error: Set the configuration variable BASE_URL before continuing to 'heroku domains' with the https://*.herokuapp.com URL."
         cat <<EOM
 
-            ## ERROR: BASE_URL must be set
+    ## ERROR: BASE_URL must be set
 
-            The Backstage buildpack requires the configuration variable
-            to be set:
+    The Backstage buildpack requires the configuration variable
+    to be set:
 
-                $ heroku domains
-                example-123.herokuapp.com
-                $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+        $ heroku domains
+        example-123.herokuapp.com
+        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
 
-        EOM
+EOM
         exit 1
     fi
 fi
