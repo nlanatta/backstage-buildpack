@@ -30,7 +30,7 @@ else
 -----> Installing app-config.heroku.yaml
 EOM
 
-    cp "$BIN_DIR/support/app-config.heroku.yaml" > "$BUILD_DIR/app-config.heroku.yaml"
+    cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
 
     if [ ! -f "$ENV_DIR/BASE_URL" ]; then
         echo "Error: Set the configuration variable BASE_URL before continuing to 'heroku domains' with the https://*.herokuapp.com URL."
