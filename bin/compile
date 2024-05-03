@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# helpers and defaults for running backstage on heroku
+#
+# set env vars
+# - require: set BASE_URL
+# - PG_VERIFY
+# create app-config.heroku.yaml
+# - heroku postgres backend
+# heroku plugins
+# - auth
+# - apps
+# add default Procfile with app-config.heroku.yaml
+
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+BIN_DIR=$(cd "$(dirname "$0")" || exit; pwd) # absolute path
+
+if [ "$BUILD_DIR/app-config.heroku.yaml" ]; then
+    echo "    app-config.heroku.yaml exists - not overwritting"
+else
+    cat <<EOM
+
+        ## Warning: Overwriting config
+
+        Setting app-config.heroku.yaml to use Heroku Postgres backend.
+
+    -----> Installing app-config.heroku.yaml
+    EOM
+
+    cp "$BIN_DIR/support/app-config.heroku.yaml" > "$BUILD_DIR/app-config.heroku.yaml"
+
+    if [ ! -f "$ENV_DIR/BASE_URL" ]; then
+        echo "Error: Set the configuration variable BASE_URL before continuing to 'heroku domains' with the https://*.herokuapp.com URL."
+        cat <<EOM
+
+        ## ERROR: BASE_URL must be set
+
+        The Backstage buildpack requires the configuration variable
+        to be set:
+
+            $ heroku domains
+            example-123.herokuapp.com
+            $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+
+    EOM
+        exit 1
+    fi
+fi
