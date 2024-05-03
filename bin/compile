@@ -36,16 +36,16 @@ else
         echo "Error: Set the configuration variable BASE_URL before continuing to 'heroku domains' with the https://*.herokuapp.com URL."
         cat <<EOM
 
-        ## ERROR: BASE_URL must be set
+            ## ERROR: BASE_URL must be set
 
-        The Backstage buildpack requires the configuration variable
-        to be set:
+            The Backstage buildpack requires the configuration variable
+            to be set:
 
-            $ heroku domains
-            example-123.herokuapp.com
-            $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+                $ heroku domains
+                example-123.herokuapp.com
+                $ heroku config:set BASE_URL=https://example-123.herokuapp.com
 
-    EOM
+        EOM
         exit 1
     fi
 fi
