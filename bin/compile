@@ -23,9 +23,9 @@ if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
 else
     cat <<EOM
 
-    ## Warning: Overwriting config
+    ## Warning: Overwriting app-config.heroku.yaml
 
-    Setting app-config.heroku.yaml to use Heroku Postgres backend.
+    Configuring to use Heroku Postgres backend.
 
 -----> Installing app-config.heroku.yaml
 EOM
@@ -33,7 +33,6 @@ EOM
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
 
     if [ ! -f "$ENV_DIR/BASE_URL" ]; then
-        echo "Error: Set the configuration variable BASE_URL before continuing to 'heroku domains' with the https://*.herokuapp.com URL."
         cat <<EOM
 
     ## ERROR: BASE_URL must be set
