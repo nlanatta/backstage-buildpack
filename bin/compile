@@ -18,6 +18,8 @@ CACHE_DIR=$2
 ENV_DIR=$3
 BIN_DIR=$(cd "$(dirname "$0")" || exit; pwd) # absolute path
 
+cp "$BIN_DIR/support/backstage-startup-config.sh" "$BUILD_DIR/.profile.d/backstage-startup-config.sh"
+
 if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
     echo "    app-config.heroku.yaml exists - not overwritting"
 else
