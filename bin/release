@@ -5,5 +5,5 @@ cat << EOF
 addons:
   - heroku-postgresql
 default_process_types:
-  web: web: yarn start-backend --config ../../app-config.yaml --config ../../app-config.production.yaml --config ../../app-config.heroku.yaml
+  web: yarn start-backend --config ../../app-config.yaml --config ../../app-config.production.yaml --config ../../app-config.heroku.yaml
 EOF
