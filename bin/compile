@@ -46,5 +46,20 @@ EOM
 
 EOM
         exit 1
+    else
+        base_url=$(<"$ENV_DIR/BASE_URL")
+        if [ "$base_url" == "https://CHANGE-ME.herokuapp.com" ]; then
+            cat <<EOM
+    ## ERROR: BASE_URL must be set
+
+    The Backstage buildpack requires the configuration variable
+    to be set:
+
+        $ heroku domains
+        example-123.herokuapp.com
+        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+
+EOM
+        fi
     fi
 fi
