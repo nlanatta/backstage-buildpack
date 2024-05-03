@@ -20,3 +20,7 @@ backend:
     ssl:
       require: true
       rejectUnauthorized: false
+
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
