@@ -18,7 +18,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 BIN_DIR=$(cd "$(dirname "$0")" || exit; pwd) # absolute path
 
-if [ "$BUILD_DIR/app-config.heroku.yaml" ]; then
+if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
     echo "    app-config.heroku.yaml exists - not overwritting"
 else
     cat <<EOM
