@@ -19,6 +19,7 @@ ENV_DIR=$3
 BIN_DIR=$(cd "$(dirname "$0")" || exit; pwd) # absolute path
 
 # fix for creating postgres schemas < Backstage 1.27
+mkdir -p "$BUILD_DIR/.profile.d"
 cp "$BIN_DIR/support/backstage-startup-config.sh" "$BUILD_DIR/.profile.d/backstage-startup-config.sh"
 
 # Default Procfile
@@ -31,22 +32,12 @@ else
     echo "-----> Procfile already exists - not overwritting."
 fi
 
-
-
-
 if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
     echo "-----> app-config.heroku.yaml exists - not overwritting."
 else
     cat <<EOM
-
-
-       ## Warning: Overwriting app-config.heroku.yaml
-
-       Configuring to use Heroku Postgres backend.
-
 -----> app-config.heroku.yaml created to use Heroku defaults:
        - Heroku Postgres backend
-
 EOM
 
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
