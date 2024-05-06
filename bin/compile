@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# helpers and defaults for running backstage on heroku
-#
-# set env vars
-# - require: set BASE_URL
-# - PG_VERIFY
-# create app-config.heroku.yaml
-# - heroku postgres backend
-# heroku plugins
-# - auth
-# - apps
-# add default Procfile with app-config.heroku.yaml
-
-
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
@@ -22,67 +9,56 @@ BIN_DIR=$(cd "$(dirname "$0")" || exit; pwd) # absolute path
 mkdir -p "$BUILD_DIR/.profile.d"
 cp "$BIN_DIR/support/backstage-startup-config.sh" "$BUILD_DIR/.profile.d/backstage-startup-config.sh"
 
-# 
-if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
-    jq '.scripts += { "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml" }' $BUILD_DIR/package.json > tmp && mv tmp $BUILD_DIR/package.json
-    echo "       package.json {scripts:build) created."
-else
-    echo "       package.json {scripts:build) exists - not overwritting."
-fi
 
-if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
-    echo "       app-config.heroku.yaml exists - not overwritting."
-else
+# error if $BASE_URL not set
+if [ ! -f "$ENV_DIR/BASE_URL" ]; then
     cat <<EOM
-       app-config.heroku.yaml created to use Heroku defaults:
-       - Heroku Postgres backend
+    ## ERROR: BASE_URL must be set
+        $ heroku domains
+        example-123.herokuapp.com
+        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
 EOM
-
-    cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
-
-    if [ ! -f "$ENV_DIR/BASE_URL" ]; then
+    exit 1
+else
+    base_url=$(<"$ENV_DIR/BASE_URL")
+    if [ "$base_url" == "https://CHANGE-ME.herokuapp.com" ]; then
         cat <<EOM
-
-
     ## ERROR: BASE_URL must be set
-
-    The Backstage buildpack requires the configuration variable
-    to be set:
-
         $ heroku domains
         example-123.herokuapp.com
         $ heroku config:set BASE_URL=https://example-123.herokuapp.com
-
-
 EOM
-        exit 1
-    else
-        base_url=$(<"$ENV_DIR/BASE_URL")
-        if [ "$base_url" == "https://CHANGE-ME.herokuapp.com" ]; then
-            cat <<EOM
-
-
-    ## ERROR: BASE_URL must be set
-
-    The Backstage buildpack requires the configuration variable
-    to be set:
-
-        $ heroku domains
-        example-123.herokuapp.com
-        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
-
-
-EOM
-        fi
     fi
 fi
 
-# Default Procfile
+
+# set package.json {scripts:build}
+if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
+    jq '.scripts += { "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml" }' $BUILD_DIR/package.json > tmp && mv tmp $BUILD_DIR/package.json
+    echo "       package.json {scripts:build} created"
+else
+    echo "       package.json {scripts:build} exists - not overwritting"
+fi
+
+
+# create app-config.heroku.yaml
+if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
+    echo "       app-config.heroku.yaml exists - not overwritting"
+else
+    cat <<EOM
+       app-config.heroku.yaml created to use defaults:
+         - Heroku Postgres backend
+         - $BASE_URL:$PORT
+EOM
+    cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
+fi
+
+# create Procfile
 # can't use bin/release because nodejs buildpack will overwrite
 if [ ! -f "$BUILD_DIR/Procfile" ]; then
     # Create Procfile with content
     echo "web: yarn workspace backend start ../../app-config.yaml --config ../../app-config.heroku.yaml" > $BUILD_DIR/Procfile
     echo "       Procfile created to load app-config.heroku.yaml"
 else
-    echo "       Procfile already exists - not overwritting."
+    echo "       Procfile already exists - not overwritting"
 fi
