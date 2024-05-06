@@ -57,7 +57,7 @@ fi
 # can't use bin/release because nodejs buildpack will overwrite
 if [ ! -f "$BUILD_DIR/Procfile" ]; then
     # Create Procfile with content
-    echo "web: yarn workspace backend start ../../app-config.yaml --config ../../app-config.heroku.yaml" > $BUILD_DIR/Procfile
+    echo "web: yarn workspace backend start --config ../../app-config.yaml --config ../../app-config.heroku.yaml" > $BUILD_DIR/Procfile
     echo "       Procfile created to load app-config.heroku.yaml"
 else
     echo "       Procfile already exists - not overwritting"
