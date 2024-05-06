@@ -50,7 +50,7 @@ else
     cat <<EOM
        app-config.heroku.yaml created to use defaults:
          - Heroku Postgres backend
-         - `$BASE_URL:$PORT`
+         - baseUrl: \$BASE_URL:\$PORT
 EOM
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
 fi
