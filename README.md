@@ -12,8 +12,8 @@ Heroku defaults for running Backstage.
    
     $ heroku buildpacks:add https://github.com/chap/backstage-buildpack --index 1
 
-#### Creates defaults for
+#### Creates defaults
 - Procfile
 - package.json {scripts:build}
 - app-config.heroku.yaml
-- adds .profile for generating postgres schemas
+- .profile for generating postgres schemas

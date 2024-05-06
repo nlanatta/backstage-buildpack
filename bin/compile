@@ -34,7 +34,9 @@ fi
 
 # set package.json {scripts:build}
 if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
-    jq '.scripts += { "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml" }' $BUILD_DIR/package.json > tmp && mv tmp $BUILD_DIR/package.json
+    jq '.scripts += {
+    "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml"
+}' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
     echo "       package.json {scripts:build} created"
 else
     echo "       package.json {scripts:build} exists - not overwritting"
@@ -48,10 +50,11 @@ else
     cat <<EOM
        app-config.heroku.yaml created to use defaults:
          - Heroku Postgres backend
-         - $BASE_URL:$PORT
+         - `$BASE_URL:$PORT`
 EOM
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
 fi
+
 
 # create Procfile
 # can't use bin/release because nodejs buildpack will overwrite
