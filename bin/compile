@@ -48,7 +48,7 @@ if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
     echo "       app-config.heroku.yaml exists - not overwritting"
 else
     cat <<EOM
-       app-config.heroku.yaml created to use defaults:
+       app-config.heroku.yaml created to use defaults
          - Heroku Postgres backend
          - baseUrl: \$BASE_URL:\$PORT
 EOM
