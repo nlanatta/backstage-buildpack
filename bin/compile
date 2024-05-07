@@ -61,7 +61,10 @@ fi
 if [ ! -f "$BUILD_DIR/Procfile" ]; then
     # Create Procfile with content
     echo "web: yarn workspace backend start --config ../../app-config.yaml --config ../../app-config.heroku.yaml" > $BUILD_DIR/Procfile
-    echo "       Procfile created to load app-config.heroku.yaml"
+    cat <<EOM
+       Procfile created to load app-config.heroku.yaml
+         - ignoring app-config.production.yaml
+EOM
 else
     echo "       Procfile already exists - not overwritting"
 fi
