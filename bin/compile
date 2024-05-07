@@ -13,20 +13,20 @@ cp "$BIN_DIR/support/backstage-startup-config.sh" "$BUILD_DIR/.profile.d/backsta
 # error if $BASE_URL not set
 if [ ! -f "$ENV_DIR/BASE_URL" ]; then
     cat <<EOM
-    ## ERROR: BASE_URL must be set
-        $ heroku domains
-        example-123.herokuapp.com
-        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+       ## ERROR: BASE_URL must be set
+         $ heroku domains
+         example-123.herokuapp.com
+         $ heroku config:set BASE_URL=https://example-123.herokuapp.com
 EOM
     exit 1
 else
     base_url=$(<"$ENV_DIR/BASE_URL")
     if [ "$base_url" == "https://CHANGE-ME.herokuapp.com" ]; then
         cat <<EOM
-    ## ERROR: BASE_URL must be set
-        $ heroku domains
-        example-123.herokuapp.com
-        $ heroku config:set BASE_URL=https://example-123.herokuapp.com
+       ## WARNING: BASE_URL can be set
+         $ heroku domains
+         example-123.herokuapp.com
+         $ heroku config:set BASE_URL=https://example-123.herokuapp.com
 EOM
     fi
 fi
