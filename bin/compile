@@ -44,7 +44,6 @@ else
 fi
 
 # set package.json {scripts:build}
-echo "       package.json"
 if jq -e '.scripts.cacheDirectories == null' $BUILD_DIR/package.json > /dev/null; then
     jq '.scripts += {
     "cacheDirectories": ["node_modules", "packages/app/node_modules", "packages/backend/node_modules"]
