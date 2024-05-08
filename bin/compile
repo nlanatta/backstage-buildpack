@@ -38,7 +38,7 @@ if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
     jq '.scripts += {
     "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml"
 }' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
-    echo "         - {scripts:build} created"
+    echo "         - {scripts:build} added"
 else
     echo "         - {scripts:build} exists | not overwriting"
 fi
@@ -48,7 +48,7 @@ if jq -e '.cacheDirectories == null' $BUILD_DIR/package.json > /dev/null; then
     jq '. += {
     "cacheDirectories": ["node_modules", "packages/app/node_modules", "packages/backend/node_modules"]
 }' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
-    echo "         - {scripts:cacheDirectories} created"
+    echo "         - {scripts:cacheDirectories} added"
 else
     echo "         - {scripts:cacheDirectories} exists | not overwriting"
 fi
@@ -59,7 +59,7 @@ if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
     echo "       app-config.heroku.yaml exists | not overwriting"
 else
     cat <<EOM
-       app-config.heroku.yaml created to use defaults
+       app-config.heroku.yaml created
          - database: Heroku Postgres $DATABASE_URL
          - baseUrl: \$BASE_URL:\$PORT
 EOM
