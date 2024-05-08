@@ -60,7 +60,7 @@ if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
 else
     cat <<EOM
        app-config.heroku.yaml created to use defaults
-         - Heroku Postgres backend
+         - database: Heroku Postgres $DATABASE_URL
          - baseUrl: \$BASE_URL:\$PORT
 EOM
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
