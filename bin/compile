@@ -33,23 +33,34 @@ fi
 
 
 # set package.json {scripts:build}
+echo "       package.json"
 if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
     jq '.scripts += {
     "build": "yarn build:backend --config ../../app-config.yaml --config ../../app-config.heroku.yaml"
 }' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
-    echo "       package.json {scripts:build} created"
+    echo "         - {scripts:build} added"
 else
-    echo "       package.json {scripts:build} exists - not overwritting"
+    echo "         - {scripts:build} exists | not overwriting"
+fi
+
+# set package.json {scripts:build}
+if jq -e '.cacheDirectories == null' $BUILD_DIR/package.json > /dev/null; then
+    jq '. += {
+    "cacheDirectories": ["node_modules", "packages/app/node_modules", "packages/backend/node_modules"]
+}' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
+    echo "         - {scripts:cacheDirectories} added"
+else
+    echo "         - {scripts:cacheDirectories} exists | not overwriting"
 fi
 
 
 # create app-config.heroku.yaml
 if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
-    echo "       app-config.heroku.yaml exists - not overwritting"
+    echo "       app-config.heroku.yaml exists | not overwriting"
 else
     cat <<EOM
-       app-config.heroku.yaml created to use defaults
-         - Heroku Postgres backend
+       app-config.heroku.yaml created
+         - database: Heroku Postgres $DATABASE_URL
          - baseUrl: \$BASE_URL:\$PORT
 EOM
     cp "$BIN_DIR/support/app-config.heroku.yaml" "$BUILD_DIR/app-config.heroku.yaml"
@@ -66,5 +77,5 @@ if [ ! -f "$BUILD_DIR/Procfile" ]; then
          - ignoring app-config.production.yaml
 EOM
 else
-    echo "       Procfile already exists - not overwritting"
+    echo "       Procfile already exists | not overwriting"
 fi
