@@ -40,7 +40,7 @@ if jq -e '.scripts.build == null' $BUILD_DIR/package.json > /dev/null; then
 }' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
     echo "         - {scripts:build} created"
 else
-    echo "         - {scripts:build} exists | not overwritting"
+    echo "         - {scripts:build} exists | not overwriting"
 fi
 
 # set package.json {scripts:build}
@@ -50,13 +50,13 @@ if jq -e '.cacheDirectories == null' $BUILD_DIR/package.json > /dev/null; then
 }' "$BUILD_DIR/package.json" > tmp && mv tmp "$BUILD_DIR/package.json"
     echo "         - {scripts:cacheDirectories} created"
 else
-    echo "         - {scripts:cacheDirectories} exists | not overwritting"
+    echo "         - {scripts:cacheDirectories} exists | not overwriting"
 fi
 
 
 # create app-config.heroku.yaml
 if [ -f "$BUILD_DIR/app-config.heroku.yaml" ]; then
-    echo "       app-config.heroku.yaml exists | not overwritting"
+    echo "       app-config.heroku.yaml exists | not overwriting"
 else
     cat <<EOM
        app-config.heroku.yaml created to use defaults
@@ -77,5 +77,5 @@ if [ ! -f "$BUILD_DIR/Procfile" ]; then
          - ignoring app-config.production.yaml
 EOM
 else
-    echo "       Procfile already exists | not overwritting"
+    echo "       Procfile already exists | not overwriting"
 fi
