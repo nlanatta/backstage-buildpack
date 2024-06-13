@@ -10,7 +10,8 @@ CREATE SCHEMA IF NOT EXISTS techdocs;
 CREATE SCHEMA IF NOT EXISTS proxy;
 CREATE SCHEMA IF NOT EXISTS permission;
 CREATE SCHEMA IF NOT EXISTS app;
-CREATE SCHEMA IF NOT EXISTS pagerduty;"
+CREATE SCHEMA IF NOT EXISTS pagerduty;
+CREATE SCHEMA IF NOT EXISTS webhooks;"
 
 # set a default PGSSLMODE if it does not exist in the environment
 export PGSSLMODE=${PGSSLMODE:-no-verify}
