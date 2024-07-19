@@ -13,7 +13,8 @@ CREATE SCHEMA IF NOT EXISTS app;
 CREATE SCHEMA IF NOT EXISTS pagerduty;
 CREATE SCHEMA IF NOT EXISTS webhooks;
 CREATE SCHEMA IF NOT EXISTS kubernetes;
-CREATE SCHEMA IF NOT EXISTS analytics;"
+CREATE SCHEMA IF NOT EXISTS analytics;
+CREATE SCHEMA IF NOT EXISTS honeycomb-dashboar;"
 
 # set a default PGSSLMODE if it does not exist in the environment
 export PGSSLMODE=${PGSSLMODE:-no-verify}
