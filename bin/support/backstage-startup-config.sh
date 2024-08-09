@@ -15,7 +15,7 @@ CREATE SCHEMA IF NOT EXISTS webhooks;
 CREATE SCHEMA IF NOT EXISTS kubernetes;
 CREATE SCHEMA IF NOT EXISTS analytics;
 CREATE SCHEMA IF NOT EXISTS "honeycomb-dashboard";
-CREATE SCHEMA IF NOT EXISTS "honeycomb-dashboard-backend";
+CREATE SCHEMA IF NOT EXISTS "iam-hub";
 CREATE SCHEMA IF NOT EXISTS "dora-metrics";'
 
 # set a default PGSSLMODE if it does not exist in the environment
